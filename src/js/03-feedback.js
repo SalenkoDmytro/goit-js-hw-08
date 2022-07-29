@@ -6,10 +6,7 @@ const refs = {
   input: document.querySelector('.feedback-form input'),
   textarea: document.querySelector('.feedback-form textarea'),
 };
-const formData = {};
-
-populateInput(getFormData());
-populateEmail(getFormData());
+let formData = { email: '', message: '' };
 
 refs.form.addEventListener('submit', onFormSubmit);
 refs.form.addEventListener('input', throttle(onFormInput, 500));
@@ -22,22 +19,22 @@ function onFormSubmit(evt) {
 }
 
 function onFormInput(event) {
+  console.log(event.target.value);
+  console.log(formData[event.target.name]);
+  console.log(event.target.value);
   formData[event.target.name] = event.target.value;
   localStorage.setItem(FORM_INPUTS, JSON.stringify(formData));
 }
 
-function populateEmail(data) {
-  data?.email ? (refs.input.value = data.email) : '';
-}
-function populateInput(data) {
-  data?.message ? (refs.textarea.value = data.message) : '';
-}
-
 function getFormData() {
   try {
-    return JSON.parse(localStorage.getItem(FORM_INPUTS));
+    formData = JSON.parse(localStorage.getItem(FORM_INPUTS));
+    for (let k in formData) {
+      refs.form.elements[k].value = formData[k];
+    }
   } catch (error) {
     console.log(error.name);
     console.log(error.message);
   }
 }
+getFormData();
