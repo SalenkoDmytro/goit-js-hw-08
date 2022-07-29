@@ -27,10 +27,10 @@ function onFormInput(event) {
 }
 
 function populateEmail(data) {
-  data.email ? (refs.input.value = data.email) : '';
+  data?.email ? (refs.input.value = data.email) : '';
 }
 function populateInput(data) {
-  data.message ? (refs.textarea.value = data.message) : '';
+  data?.message ? (refs.textarea.value = data.message) : '';
 }
 
 function getFormData() {
